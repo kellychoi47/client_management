@@ -1,6 +1,7 @@
 const express=require("express");
 const cors=require("cors");
 const {Pool}=require("pg");
+require("dotenv").config();
 const bodyParser=require("body-parser");
 
 const app=express();
@@ -12,15 +13,10 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 
-require("dotenv").config();
+
 
 const pool = new Pool({
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    max: 10
+    connectionString: process.env.DATABASE_URL,
 });
 
 pool.on("connect", () => {
